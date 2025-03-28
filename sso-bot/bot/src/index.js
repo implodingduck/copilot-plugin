@@ -86,7 +86,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function() {
 server.post('/api/messages', async (req, res) => {
     // Route received a request to adapter for processing
     console.log(`Req: ${req}`);
-    console.log(`Req.params: ${req.params}`);
-    console.log(`Req.body: ${req.body}`);
+    console.log(`Req.params: ${JSON.stringify(req.params)}`);
+    console.log(`Req.body: ${JSON.stringify(req.body)}`);
     await adapter.process(req, res, (context) => bot.run(context));
 });

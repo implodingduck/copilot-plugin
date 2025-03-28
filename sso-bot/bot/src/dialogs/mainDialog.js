@@ -69,7 +69,7 @@ class MainDialog extends LogoutDialog {
      */
     async loginStep(stepContext) {
         const tokenResponse = stepContext.result;
-        console.log(`Token response: ${tokenResponse}`);
+        console.log(`Token response: ${JSON.stringify(tokenResponse)}`);
         if (!tokenResponse || !tokenResponse.token) {
             await stepContext.context.sendActivity('Login was not successful, please try again.');
             return await stepContext.endDialog();
