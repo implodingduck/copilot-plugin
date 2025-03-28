@@ -69,18 +69,26 @@ class MainDialog extends LogoutDialog {
      */
     async loginStep(stepContext) {
         const tokenResponse = stepContext.result;
+        console.log(`Token response: ${tokenResponse}`);
         if (!tokenResponse || !tokenResponse.token) {
             await stepContext.context.sendActivity('Login was not successful, please try again.');
             return await stepContext.endDialog();
         } else {
-            const client = new SimpleGraphClient(tokenResponse.token);
-            const me = await client.getMe();
-            const title = me ? me.jobTitle : 'Unknown';
-            await stepContext.context.sendActivity(`You're logged in as ${me.displayName} (${me.userPrincipalName}); your job title is: ${title}; your photo is: `);
-            const photoBase64 = await client.GetPhotoAsync(tokenResponse.token);
-            const card = CardFactory.thumbnailCard("", CardFactory.images([photoBase64]));
-            await stepContext.context.sendActivity({ attachments: [card] });
-            return await stepContext.prompt(CONFIRM_PROMPT, 'Would you like to view your token?');
+            try {
+                const client = new SimpleGraphClient(tokenResponse.token);
+                const me = await client.getMe();
+                const title = me ? me.jobTitle : 'Unknown';
+                await stepContext.context.sendActivity(`You're logged in as ${me.displayName} (${me.userPrincipalName}); your job title is: ${title}; your photo is: `);
+                const photoBase64 = await client.GetPhotoAsync(tokenResponse.token);
+                const card = CardFactory.thumbnailCard("", CardFactory.images([photoBase64]));
+                await stepContext.context.sendActivity({ attachments: [card] });
+                return await stepContext.prompt(CONFIRM_PROMPT, 'Would you like to view your token?');
+            } catch (error) {
+                console.error(`Error: ${error}`);
+                await stepContext.context.sendActivity(`An error occurred while processing your request. ${error}`);
+                return await stepContext.endDialog();
+            }
+            
         }
     }
 
