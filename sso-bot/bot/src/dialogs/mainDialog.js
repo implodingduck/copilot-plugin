@@ -79,7 +79,13 @@ class MainDialog extends LogoutDialog {
                 const me = await client.getMe();
                 const title = me ? me.jobTitle : 'Unknown';
                 await stepContext.context.sendActivity(`You're logged in as ${me.displayName} (${me.userPrincipalName}); your job title is: ${title}; your photo is: `);
-                const photoBase64 = await client.getPhotoAsync(tokenResponse.token);
+                let photoBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAIAAAC0Ujn1AAABeklEQVRIDe2UQcuDMAyG92+97OLBwwQRxpRNdAw9FCZsiohDCgqKiOB/20FoY7TV+eHtgx6SEJ/GN2kOimbtdA47cRXN+kcjbZcF0e0gTGjV9sNJaXW5PxFl1l1AX+5PBoVGmNDj6TZLZEEZWjVciEO2H6aMMmvI0OT9QTjkqoY7Cx2CMnRRd4iFXI/EW9DH0w2Bpm6Y0C1oudDDNVFWbEErmjUtE0XknZRpndIKsZArH3AZ2nQIYkE3LxuJGsvrSTJ/uh38Ca1olh+msNiq7fOyWeQKq9bOD4/E5P0ZHoVquFf/5ZHYI7HpkKFY3Q6irPBILLoGa206JC8bVmZRd1f/hX5cNVwkVEor7fxAaSO0qG952fhhOlQNtyCroGr7ou4QfYRenDbImtrocXL0mpc9xaEI1ISjdTtAeRtcqAlHi7b+Txew+RkNn0finyizyXDN8qpFrZ9FiIKwkxwdZYXog/VxuGY5Gr6U9SyUCXcWR6OkzS6bvx3RX0LwAtuNaNskAAAAAElFTkSuQmCC';
+                try{
+                    photoBase64 = await client.getPhotoAsync(tokenResponse.token);    
+                }catch (error) {
+                    console.error(`Error fetching photo: ${error}`);
+                }
+                
                 const card = CardFactory.thumbnailCard("", CardFactory.images([photoBase64]));
                 await stepContext.context.sendActivity({ attachments: [card] });
                 return await stepContext.prompt(CONFIRM_PROMPT, 'Would you like to view your token?');
