@@ -159,12 +159,15 @@ class DialogBot extends TeamsActivityHandler {
         console.log(`Invoke Value: ${invokeValue}`);
         this.randomnumber = Math.floor(Math.random() * 100);
         const payload = this.randompayload();
-        await context.sendActivity({
-            attachments: [
-                CardFactory.adaptiveCard(payload)
-            ],
-            attachmentLayout: AttachmentLayoutTypes.Carousel
-        });
+        const cardRes = {
+            statusCode: StatusCodes.OK,
+            type: 'application/vnd.microsoft.card.adaptive',
+            value: payload
+        };
+        return {
+            statusCode: 200,
+            body: cardRes
+        }
     }
 
     /**
