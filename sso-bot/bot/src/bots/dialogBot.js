@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { TeamsActivityHandler } = require('botbuilder');
+const { TeamsActivityHandler, CardFactory } = require('botbuilder');
 
 
 const chartpayload = {
@@ -105,7 +105,7 @@ class DialogBot extends TeamsActivityHandler {
             await this.dialog.run(context, this.dialogState);
         }else if (context.activity.text === 'card') {
             await context.sendActivity({ attachments: [
-                chartpayload
+                CardFactory.adaptiveCard(chartpayload)
             ]});
         }
         else {
