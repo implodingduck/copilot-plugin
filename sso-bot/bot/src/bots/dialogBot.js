@@ -153,7 +153,7 @@ class DialogBot extends TeamsActivityHandler {
         return super.onInvokeActivity(context);
     }
 
-    async handleTeamsCardActionInvoke(context) {
+    async onAdaptiveCardInvoke(context) {
         
         this.randomnumber = Math.floor(Math.random() * 100);
         const payload = this.randompayload();
