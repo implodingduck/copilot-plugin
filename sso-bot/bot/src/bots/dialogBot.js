@@ -167,6 +167,7 @@ class DialogBot extends TeamsActivityHandler {
         
         await context.updateActivity(
             {
+                activityId: context.activity.replyToId,
                 attachments: [
                     CardFactory.adaptiveCard(chartpayload1),
                     CardFactory.adaptiveCard(this.randompayload()),
