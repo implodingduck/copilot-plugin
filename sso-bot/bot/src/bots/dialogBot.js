@@ -160,7 +160,7 @@ class DialogBot extends TeamsActivityHandler {
         this.randomnumber = Math.floor(Math.random() * 100);
         const payload = this.randompayload();
         const cardRes = {
-            statusCode: StatusCodes.OK,
+            statusCode: 200,
             type: 'application/vnd.microsoft.card.adaptive',
             value: payload
         };
