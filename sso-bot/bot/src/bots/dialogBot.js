@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { TeamsActivityHandler, CardFactory } = require('botbuilder');
+const { TeamsActivityHandler, CardFactory, AttachmentLayoutTypes } = require('botbuilder');
 
 
 const chartpayload1 = {
