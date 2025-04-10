@@ -147,6 +147,24 @@ class DialogBot extends TeamsActivityHandler {
         await next();
     }
 
+    async onInvokeActivity(context) {
+        console.log(`Context: ${JSON.stringify(context)}`);
+        console.log(`Invoke: ${context.activity.name}`);
+        return super.onInvokeActivity(context);
+    }
+
+    async handleTeamsCardActionInvoke(context) {
+        
+        this.randomnumber = Math.floor(Math.random() * 100);
+        const payload = this.randompayload();
+        await context.sendActivity({
+            attachments: [
+                CardFactory.adaptiveCard(payload)
+            ],
+            attachmentLayout: AttachmentLayoutTypes.Carousel
+        });
+    }
+
     /**
      * Override the ActivityHandler.run() method to save state changes after the bot logic completes.
      * @param {TurnContext} context - The context object for the turn.
