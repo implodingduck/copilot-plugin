@@ -156,7 +156,9 @@ class DialogBot extends TeamsActivityHandler {
     async onAdaptiveCardInvoke(context, invokeValue) {
         console.log(`Context:`);
         console.log(`${JSON.stringify(context, null, 2)}`);
+        console.log(`Activity: ${JSON.stringify(context.activity, null, 2)}`);
         console.log(`Invoke Value: ${JSON.stringify(invokeValue)}`);
+    
         this.randomnumber = Math.floor(Math.random() * 100);
         const payload = this.randompayload();
         // const cardRes = {
