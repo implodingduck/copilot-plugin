@@ -3,6 +3,63 @@
 
 const { TeamsActivityHandler } = require('botbuilder');
 
+
+const chartpayload = {
+    "type": "AdaptiveCard",
+    "version": "1.5",
+    "body": [
+      {
+        "type": "TextBlock",
+        "text": "Basic",
+        "size": "extraLarge"
+      },
+      {
+        "type": "Chart.Gauge",
+        "value": 50,
+        "segments": [
+          {
+            "legend": "Low risk",
+            "size": 33,
+            "color": "good"
+          },
+          {
+            "legend": "Medium risk",
+            "size": 34,
+            "color": "warning"
+          },
+          {
+            "legend": "High risk",
+            "size": 33,
+            "color": "attention"
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "text": "Single value",
+        "size": "extraLarge",
+        "spacing": "large",
+        "separator": true
+      },
+      {
+        "type": "Chart.Gauge",
+        "value": 35,
+        "valueFormat": "fraction",
+        "segments": [
+          {
+            "legend": "Used",
+            "size": 35
+          },
+          {
+            "legend": "Unused",
+            "size": 65,
+            "color": "neutral"
+          }
+        ]
+      }
+    ]
+  }
+
 /**
  * DialogBot class extends TeamsActivityHandler to handle Teams activities.
  */
@@ -46,7 +103,12 @@ class DialogBot extends TeamsActivityHandler {
         console.log(`Message: ${context.activity.text}`)
         if (context.activity.text === 'login') {
             await this.dialog.run(context, this.dialogState);
-        }else {
+        }else if (context.activity.text === 'card') {
+            await context.sendActivity({ attachments: [
+                chartpayload
+            ]});
+        }
+        else {
             await context.sendActivity(`Please type "login" to start the authentication process... echoing back your message: ${context.activity.text}`);
         }
         
