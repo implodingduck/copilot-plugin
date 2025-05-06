@@ -185,16 +185,13 @@ class DialogBot extends TeamsActivityHandler {
             );
         }
         if (invokeValue.action.data.action === 'Copy') {
-            const uuid = crypto.randomUUID();
+            const codeSnippet = `\`\`\`plain\n${this.randomnumber}\n\`\`\``;
             await context.sendActivity(
                 {
                     type: "message",
-                    text: `${this.randomnumber} [1]`,
+                    text: codeSnippet,
                     attachments: [
-                        {
-                            "contentType":"text/html",
-                            "content":`<p itemtype=\"http://schema.skype.com/CodeBlockEditor\" id=\"x_codeBlockEditor-${uuid}\"><pre class=\"language-plaintext\" itemid=\"codeBlockEditor-${uuid}\"><code>${this.randomnumber}</code></pre>`
-                        }
+                        
                     ],
                     channelData: {
                         feedbackLoop: { // Enable feedback buttons
