@@ -111,12 +111,9 @@ class DialogBot extends TeamsActivityHandler {
                         }
                     },
                     {
-                        "type": "Action.Execute",
+                        "type": "Action.OpenUrlDialog",
                         "title": "Copy",
-                        "data": {
-                            "action": "Copy",
-                            "currentvalue": this.randomnumber
-                        }
+                        "url": "https://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url",
                     }
                 ]
         };
