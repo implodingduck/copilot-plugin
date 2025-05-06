@@ -191,7 +191,30 @@ class DialogBot extends TeamsActivityHandler {
                     type: "message",
                     text: codeSnippet,
                     attachments: [
-                        
+                        CardFactory.adaptiveCard(
+                            {
+                                "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+                                "type": "AdaptiveCard",
+                                "version": "1.5",
+                                "body": [
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "editor.js",
+                                        "style": "heading"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Lines 61 - 76"
+                                    },
+                                    {
+                                        "type": "CodeBlock",
+                                        "codeSnippet": "/**\n* @author John Smith <john.smith@example.com>\n*/\npackage l2f.gameserver.model;\n\npublic abstract strictfp class L2Char extends L2Object {\n  public static final Short ERROR = 0x0001;\n\n  public void moveTo(int x, int y, int z) {\n    _ai = null;\n    log(\"Should not be called\");\n    if (1 > 5) { // what!?\n      return;\n    }\n  }\n}",
+                                        "language": "java",
+                                        "startLineNumber": 61
+                                    }
+                                ]
+                              }
+                        ),
                     ],
                     channelData: {
                         feedbackLoop: { // Enable feedback buttons
