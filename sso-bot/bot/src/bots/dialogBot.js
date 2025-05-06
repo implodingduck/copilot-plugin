@@ -111,18 +111,8 @@ class DialogBot extends TeamsActivityHandler {
                         }
                     },
                     {
-                        "type": "Action.ShowCard",
+                        "type": "Action.Execute",
                         "title": "Copy",
-                        "card": {
-                            "type": "AdaptiveCard",
-                            "version": "1.5",
-                            "body": [
-                                {
-                                    "type": "TextBlock",
-                                    "text": "[https://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url](https://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url)",
-                                }
-                            ],
-                        }
                     }
                 ]
         };
@@ -192,69 +182,7 @@ class DialogBot extends TeamsActivityHandler {
         }
         if (invokeValue.action.data.action === 'Copy') {
             const codeSnippet = `\`\`\`plain\n${this.randomnumber}\n\`\`\``;
-            await context.sendActivity(
-                {
-                    type: "message",
-                    text: codeSnippet,
-                    attachments: [
-                        CardFactory.adaptiveCard(
-                            {
-                                "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
-                                "type": "AdaptiveCard",
-                                "version": "1.5",
-                                "body": [
-                                    {
-                                        "type": "TextBlock",
-                                        "text": "editor.js",
-                                        "style": "heading"
-                                    },
-                                    {
-                                        "type": "TextBlock",
-                                        "text": "Lines 61 - 76"
-                                    },
-                                    {
-                                        "type": "CodeBlock",
-                                        "codeSnippet": "/**\n* @author John Smith <john.smith@example.com>\n*/\npackage l2f.gameserver.model;\n\npublic abstract strictfp class L2Char extends L2Object {\n  public static final Short ERROR = 0x0001;\n\n  public void moveTo(int x, int y, int z) {\n    _ai = null;\n    log(\"Should not be called\");\n    if (1 > 5) { // what!?\n      return;\n    }\n  }\n}",
-                                        "language": "java",
-                                        "startLineNumber": 61
-                                    }
-                                ]
-                              }
-                        ),
-                    ],
-                    channelData: {
-                        feedbackLoop: { // Enable feedback buttons
-                            type: "default"
-                        }
-                    },
-                    entities: [
-                        {
-                            type: "https://schema.org/Message",
-                            "@type": "Message",
-                            "@context": "https://schema.org",
-                            citation: [
-                                {
-                                    "@type": "Claim",
-                                    position: 1, // Required. Must match the [1] in the text above
-                                    appearance: {
-                                        "@type": "DigitalDocument",
-                                        name: "AI bot", // Title
-                                        url: "https://example.com/claim-1", // Hyperlink on the title
-                                        abstract: "Excerpt description", // Appears in the citation pop-up window
-                                        text: "{\"type\":\"AdaptiveCard\",\"$schema\":\"http://adaptivecards.io/schemas/adaptive-card.json\",\"version\":\"1.6\",\"body\":[{\"type\":\"TextBlock\",\"text\":\"Adaptive Card text\"}]}", // Appears as a stringified Adaptive Card
-                                        keywords: ["keyword 1", "keyword 2", "keyword 3"], // Appears in the citation pop-up window
-                                        encodingFormat: "application/vnd.microsoft.card.adaptive",
-                                        image: {
-                                            "@type": "ImageObject",
-                                            name: "Microsoft Word"
-                                        },
-                                    },
-                                },
-                            ],
-                        }
-                    ]
-                }
-            );
+            await context.sendActivity(`https://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url`);
         }
 
         return {
