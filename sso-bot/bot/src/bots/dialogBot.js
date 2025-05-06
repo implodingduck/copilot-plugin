@@ -189,12 +189,38 @@ class DialogBot extends TeamsActivityHandler {
             await context.sendActivity(
                 {
                     type: "message",
-                    text: `${this.randomnumber}`,
+                    text: `${this.randomnumber} [1]`,
                     channelData: {
                         feedbackLoop: { // Enable feedback buttons
-                            type: "custom"
+                            type: "default"
                         }
-                    }
+                    },
+                    entities: [
+                        {
+                          type: "https://schema.org/Message",
+                          "@type": "Message",
+                          "@context": "https://schema.org",
+                          citation: [
+                          {
+                            "@type": "Claim",
+                            position: 1, // Required. Must match the [1] in the text above
+                            appearance: {
+                              "@type": "DigitalDocument",
+                              name: "AI bot", // Title
+                              url: "https://example.com/claim-1", // Hyperlink on the title
+                              abstract: "Excerpt description", // Appears in the citation pop-up window
+                              text: "{\"type\":\"AdaptiveCard\",\"$schema\":\"http://adaptivecards.io/schemas/adaptive-card.json\",\"version\":\"1.6\",\"body\":[{\"type\":\"TextBlock\",\"text\":\"Adaptive Card text\"}]}", // Appears as a stringified Adaptive Card
+                              keywords: ["keyword 1", "keyword 2", "keyword 3"], // Appears in the citation pop-up window
+                              encodingFormat: "application/vnd.microsoft.card.adaptive",
+                              image: {
+                                "@type": "ImageObject",
+                                name: "Microsoft Word"
+                              },
+                             },
+                            },
+                          ],
+                        }
+                    ]
                 }
             );
         }
