@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { TeamsActivityHandler, CardFactory, AttachmentLayoutTypes } = require('botbuilder');
+const { TeamsActivityHandler, CardFactory, AttachmentLayoutTypes, ActivityFactory  } = require('botbuilder');
 
 
 const chartpayload1 = {
@@ -106,6 +106,15 @@ class DialogBot extends TeamsActivityHandler {
                         "type": "Action.Execute",
                         "title": "Randomize",
                         "data": {
+                            "action": "Randomize",
+                            "currentvalue": this.randomnumber
+                        }
+                    }
+                    {
+                        "type": "Action.Execute",
+                        "title": "Copy",
+                        "data": {
+                            "action": "Copy",
                             "currentvalue": this.randomnumber
                         }
                     }
@@ -159,20 +168,36 @@ class DialogBot extends TeamsActivityHandler {
         console.log(`Activity: ${JSON.stringify(context.activity, null, 2)}`);
         console.log(`Invoke Value: ${JSON.stringify(invokeValue)}`);
     
-        this.randomnumber = Math.floor(Math.random() * 100);
+        if (invokeValue.action.data.action === 'Randomize') {
+            this.randomnumber = Math.floor(Math.random() * 100);
 
-        
-        await context.updateActivity(
-            {
-                id: context.activity.replyToId,
-                type: "message",
-                attachments: [
-                    CardFactory.adaptiveCard(chartpayload1),
-                    CardFactory.adaptiveCard(this.randompayload()),
-                ],
-                attachmentLayout: AttachmentLayoutTypes.Carousel
-            }
-        );
+            
+            await context.updateActivity(
+                {
+                    id: context.activity.replyToId,
+                    type: "message",
+                    attachments: [
+                        CardFactory.adaptiveCard(chartpayload1),
+                        CardFactory.adaptiveCard(this.randompayload()),
+                    ],
+                    attachmentLayout: AttachmentLayoutTypes.Carousel
+                }
+            );
+        }
+        if (invokeValue.action.data.action === 'Copy') {
+            
+            await context.sendActivity(
+                {
+                    type: "message",
+                    text: `${this.randomnumber}`,
+                    channelData: {
+                        feedbackLoop: { // Enable feedback buttons
+                            type: "custom"
+                        }
+                    }
+                }
+            );
+        }
 
         return {
             statusCode: 200,
