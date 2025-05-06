@@ -109,7 +109,7 @@ class DialogBot extends TeamsActivityHandler {
                             "action": "Randomize",
                             "currentvalue": this.randomnumber
                         }
-                    }
+                    },
                     {
                         "type": "Action.Execute",
                         "title": "Copy",
