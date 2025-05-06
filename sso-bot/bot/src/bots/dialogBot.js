@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { AttachmentLayoutTypes, TeamsActivityHandler, CardFactory, MessageFactory  } = require('botbuilder');
+const { ActionTypes, AttachmentLayoutTypes, TeamsActivityHandler, CardFactory, MessageFactory  } = require('botbuilder');
 
 
 const chartpayload1 = {
@@ -188,6 +188,7 @@ class DialogBot extends TeamsActivityHandler {
             const codeSnippet = `\`\`\`plain\nhttps://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url\n\`\`\``;
             await context.sendActivity(`https://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url`);
             await context.sendActivity(codeSnippet);
+            await context.sendActivity({ attachments: [CardFactory.heroCard('Hero Card', 'https://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url')] });
             const cardActions = [
                 {
                     type: ActionTypes.PostBack,
@@ -214,7 +215,7 @@ class DialogBot extends TeamsActivityHandler {
     
             const reply = MessageFactory.suggestedActions(cardActions, 'What is the best color?');
             await context.sendActivity(reply);
-
+            
         }
 
         return {
