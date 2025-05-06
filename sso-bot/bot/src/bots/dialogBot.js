@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { TeamsActivityHandler, CardFactory, AttachmentLayoutTypes  } = require('botbuilder');
+const { TeamsActivityHandler, CardFactory, MessageFactory  } = require('botbuilder');
 
 
 const chartpayload1 = {
@@ -185,8 +185,36 @@ class DialogBot extends TeamsActivityHandler {
             );
         }
         if (invokeValue.action.data.action === 'Copy') {
-            const codeSnippet = `\`\`\`plain\n${this.randomnumber}\n\`\`\``;
+            const codeSnippet = `\`\`\`plain\nhttps://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url\n\`\`\``;
             await context.sendActivity(`https://adaptivecards.microsoft.com/?topic=Action.OpenUrl#url`);
+            await context.sendActivity(codeSnippet);
+            const cardActions = [
+                {
+                    type: ActionTypes.PostBack,
+                    title: 'Red',
+                    value: 'Red',
+                    image: 'https://placehold.co/20/red/red?text=R',
+                    imageAltText: 'R'
+                },
+                {
+                    type: ActionTypes.PostBack,
+                    title: 'Yellow',
+                    value: 'Yellow',
+                    image: 'https://placehold.co/20/yellow/yellow?text=Y',
+                    imageAltText: 'Y'
+                },
+                {
+                    type: ActionTypes.PostBack,
+                    title: 'Blue',
+                    value: 'Blue',
+                    image: 'https://placehold.co/20/blue/blue?text=B',
+                    imageAltText: 'B'
+                }
+            ];
+    
+            const reply = MessageFactory.suggestedActions(cardActions, 'What is the best color?');
+            await turnContext.sendActivity(reply);
+
         }
 
         return {
