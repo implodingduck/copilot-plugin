@@ -213,7 +213,7 @@ class DialogBot extends TeamsActivityHandler {
             ];
     
             const reply = MessageFactory.suggestedActions(cardActions, 'What is the best color?');
-            await turnContext.sendActivity(reply);
+            await context.sendActivity(reply);
 
         }
 
